@@ -1,0 +1,6 @@
+---
+- name: add mesos repo
+  sudo: yes
+  yum:
+    name: "{{ mesos_rpm_repo_url }}"
+    state: present

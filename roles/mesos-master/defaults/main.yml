@@ -1,0 +1,3 @@
+mesos_cluster: cluster01
+mesos_log_dir: /var/log/mesos
+mesos_work_dir: /var/run/mesos

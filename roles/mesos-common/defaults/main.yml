@@ -1,0 +1,5 @@
+#mesos_version: 0.25.0
+#mesos_pkg_name: "mesos-{{ mesos_version }}"
+#mesos_arch_url: "http://www.apache.org/dist/mesos/{{ mesos_version }}/{{ mesos_pkg_name }}.tar.gz"
+mesos_rpm_repo_url: http://repos.mesosphere.com/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm
+

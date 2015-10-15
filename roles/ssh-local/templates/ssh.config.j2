@@ -1,0 +1,31 @@
+{% set master_host = groups['role=master'][0] %}
+{% set ssh_user = hostvars[master_host].ansible_ssh_user %}
+{% if local_ssh_jump_ip and local_ssh_jump_ip is defined %}
+Host "{{ local_ssh_jump_ip }}"
+    User                   {{ ssh_user }}
+    HostName               {{ local_ssh_jump_ip }}
+    ProxyCommand           none
+    BatchMode              yes
+    PasswordAuthentication no
+    StrictHostKeyChecking  no
+    UserKnownHostsFile      /dev/null
+    IdentityFile     {{ local_ssh_key }}
+
+Host *
+    ServerAliveInterval    60
+    TCPKeepAlive           yes
+    ProxyCommand           ssh {{ ssh_user }}@{{ local_ssh_jump_ip }} -W %h:%p -i {{ local_ssh_key }} -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null
+    User                   {{ ssh_user }}
+    StrictHostKeyChecking  no
+    UserKnownHostsFile      /dev/null
+    IdentityFile     {{ local_ssh_key }}
+{% else %}
+Host *
+    User                   {{ ssh_user }}
+    ProxyCommand           none
+    BatchMode              yes
+    PasswordAuthentication no
+    StrictHostKeyChecking  no
+    UserKnownHostsFile      /dev/null
+    IdentityFile     {{ local_ssh_key }}
+{% endif %}

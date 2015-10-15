@@ -1,0 +1,5 @@
+---
+- name: setup local ssh.config
+  template:
+    src: ssh.config.j2
+    dest: "{{project_root}}/ssh.config"

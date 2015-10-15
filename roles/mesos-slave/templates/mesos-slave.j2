@@ -1,0 +1,9 @@
+MESOS_MASTER={% for host in groups['role=master'] %} {{ hostvars[host].ansible_default_ipv4.address }}:2181{% if not loop.last %}, {% endif %} {% endfor %}/mesos
+MESOS_CONTAINERIZERS=docker,mesos
+MESOS_LOG_DIR=/var/log/mesos
+MESOS_EXECUTOR_REGISTRATION_TIMEOUT=5mins
+MESOS_ISOLATION=cgroups/cpu,cgroups/mem
+MESOS_WORK_DIR=/var/lib/mesos/slave
+MESOS_RESOURCES=ports:[1025-2180,2182-3887,3889-5049,5052-8079,8082-65535]
+MESOS_HOSTNAME={{ ansible_fqdn }}
+MESOS_IP={{ ansible_default_ipv4.address }}

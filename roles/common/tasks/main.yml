@@ -1,0 +1,72 @@
+---
+- name: set timezone to etc/utc
+  sudo: yes
+  file:
+    src: /usr/share/zoneinfo/Etc/UTC
+    dest: /etc/localtime
+    state: link
+    force: yes
+
+- name: setup hostnames
+  sudo: yes
+  hostname:
+    name: "{{ inventory_hostname }}.{{ hostvars[inventory_hostname].domain }}"
+
+- name: change hostname file
+  sudo: yes
+  lineinfile:
+    dest: /etc/cloud/cloud.cfg
+    line: 'preserve_hostname: true'
+    insertafter: EOF
+
+- name: configure hosts file
+  sudo: yes
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ hostvars[item].ansible_default_ipv4.address }} {{ item }} {{ item }}.{{ hostvars[inventory_hostname].domain }}"
+    state: present
+  when: hostvars[item].ansible_default_ipv4.address is defined
+  with_items: groups['all']
+
+- name: disable firewalld
+  service:
+    name: firewalld
+    enabled: no
+    state: stopped
+
+- name: ensure python-selinux is installed
+  sudo: yes
+  yum:
+    name=libselinux-python
+    state=installed
+
+- name: SELinux to permissive state
+  sudo: yes
+  selinux:
+    policy=targeted
+    state=permissive
+
+- name: setup required packages
+  sudo: yes
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - epel-release
+    - python-pip
+    - wget
+    - unzip
+    - vim
+    - git
+
+- name: update setuptools and pip
+  sudo: yes
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - pip
+    - setuptools
+
+- include: users.yml
+- include: logrotate.yml

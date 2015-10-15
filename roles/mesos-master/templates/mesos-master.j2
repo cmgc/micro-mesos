@@ -1,0 +1,8 @@
+MESOS_LOG_DIR={{ mesos_log_dir }}
+MESOS_WORK_DIR={{ mesos_work_dir }}
+MESOS_ZK=`cat /etc/mesos/zk`
+MESOS_CLUSTER={{ mesos_cluster }}
+MESOS_ROLES=slave_public
+MESOS_HOSTNAME={{ ansible_fqdn }}
+MESOS_IP={{ private_ipv4 }}
+MESOS_QUORUM= {{ groups[role=master]|count // 2 + 1 }}

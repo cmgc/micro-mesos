@@ -1,0 +1,3 @@
+---
+local_ssh_jump_ip: "{{ lookup('env', 'JUMPHOST') | default ('JUMPHOST', False) }}"
+local_ssh_key: "{{ lookup('env', 'SSH_KEY') | default ('~/.ssh/id_rsa', true) }}"
