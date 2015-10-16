@@ -1,4 +1,4 @@
-MESOS_MASTER={% for host in groups['role=master'] %} {{ hostvars[host].ansible_default_ipv4.address }}:2181{% if not loop.last %}, {% endif %} {% endfor %}/mesos
+MESOS_MASTER=zk://{% for host in groups['role=master'] %} {{ hostvars[host].ansible_default_ipv4.address }}:2181{% if not loop.last %},{% endif %} {% endfor %}/mesos
 MESOS_CONTAINERIZERS=docker,mesos
 MESOS_LOG_DIR=/var/log/mesos
 MESOS_EXECUTOR_REGISTRATION_TIMEOUT=5mins

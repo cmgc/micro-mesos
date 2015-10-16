@@ -37,14 +37,14 @@
 - name: ensure python-selinux is installed
   sudo: yes
   yum:
-    name=libselinux-python
-    state=installed
+    name: libselinux-python
+    state: installed
 
 - name: SELinux to permissive state
   sudo: yes
   selinux:
-    policy=targeted
-    state=permissive
+    policy: targeted
+    state: permissive
 
 - name: setup required packages
   sudo: yes
