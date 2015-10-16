@@ -1,0 +1,18 @@
+---
+- name: install marathon
+  sudo: yes
+  yum:
+    name: marathon
+    state: present
+
+- name: copy marathon conf
+  sudo: yes
+  template:
+    src: marathon.j2
+    dest: /etc/sysconfig/marathon
+
+- name: start marathon
+  sudo: yes
+  service:
+    name: marathon
+    state: started

@@ -6,8 +6,6 @@
     state: present
   with_items:
     - mesos
-    - marathon
-    - zookeeper
 
 - name: copy zk conf for mesos
   sudo: yes
@@ -15,9 +13,14 @@
     src: zk.j2
     dest: /etc/mesos/zk
 
-
 - name: copy mesos-master conf
   sudo: yes
   template:
     src: mesos-master.j2
     dest: /etc/default/mesos-master
+
+- name: start mesos-master
+  sudo: yes
+  service:
+    name: mesos-master
+    state: started

@@ -1,0 +1,12 @@
+---
+- name: install zookeeper
+  sudo: yes
+  yum:
+    name: zookeeper
+    state: present
+
+- name: start zookeeper
+  sudo: yes
+  service:
+    name: zookeeper
+    state: started
