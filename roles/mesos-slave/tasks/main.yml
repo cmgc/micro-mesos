@@ -1,0 +1,12 @@
+---
+ - name: copy mesos-slave conf
+  sudo: yes
+  template:
+    src: mesos-slave.j2
+    dest: /etc/default/mesos-slave
+
+- name: start mesos-slave
+  sudo: yes
+  service:
+    name: mesos-slave
+    state: started
