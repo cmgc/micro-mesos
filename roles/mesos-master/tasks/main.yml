@@ -1,10 +1,4 @@
 ---
-- name: copy zk conf for mesos
-  sudo: yes
-  template:
-    src: zk.j2
-    dest: /etc/mesos/zk
-
 - name: copy mesos-master conf
   sudo: yes
   template:
