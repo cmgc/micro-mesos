@@ -4,7 +4,7 @@
   vars:
     project_root: .
   roles:
-    - ssh-local-config
+    - ssh-local
 
 - hosts: all
   gather_facts: yes
